@@ -1,0 +1,27 @@
+.calendar-container {
+  font-family: sans-serif;
+  text-align: center;
+  display: inline;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.calendar{
+  padding: 5px 10px;
+  margin: 5px;
+}
+
+.custom-datepicker .react-datepicker-wrapper {
+  width: 300px; /* Adjust the width as needed */
+}
+
+.cancel-btn{
+  width: 100%;
+  padding: 3% 0;
+  font-size: 0.944rem;
+  background: transparent;
+  border: none;
+  border-top: 1px solid blue;
+}
