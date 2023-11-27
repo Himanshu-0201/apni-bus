@@ -78,15 +78,15 @@ const Modal = (props) => {
                     <div className={Classes['modal-container']}>
                         <ul>
                             <li>
-                                <input type="radio" id="today" name="date" value="today" checked={isToday} onChange={handleChange} />
-                                <label htmlFor="today">Today</label>
+                                <input type="radio" id="today" name="date" value="today" checked={isToday} onChange={()=>{}} onClick={(event)=> handleChange(event)} />
+                                <label htmlFor="today">Today</label> 
                             </li>
                             <li>
-                                <input type="radio" id="tomorrow" name="date" value="tomorrow" checked={isTomorrow} onChange={handleChange} />
+                                <input type="radio" id="tomorrow" name="date" value="tomorrow" checked={isTomorrow} onChange={()=>{}} onClick={(event)=> handleChange(event)} />
                                 <label htmlFor="tomorrow">Tomorrow</label>
                             </li>
                             <li>
-                                <input type="radio" id="choose" name="date" value="choose" checked={!isToday && !isTomorrow} onChange={handleChange} />
+                                <input type="radio" id="choose" name="date" value="choose" checked={!isToday && !isTomorrow} onChange={()=>{}} onClick={(event)=> handleChange(event)} />
                                 <label htmlFor="choose">Choose from calendar</label>
                             </li>
 

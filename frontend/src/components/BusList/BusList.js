@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { FaAngleDown } from "react-icons/fa";
 import Bus from "../../components/Bus/Bus";
 import Modal from "../Modal/Modal";
 import Classes from "./BusList.module.scss";
 import TravelStations from "../TravelStations/TravelStations";
+import NoBusAvailable from "../NoBusAvailable/NoBusAvailable";
 
 const BusList = () => {
 
@@ -31,13 +33,13 @@ const BusList = () => {
 
     const changeDayHandler = (date) => {
         let selectedDay;
-        if(date.getDate() === todayTime.getDate() && date.getMonth() === todayTime.getMonth() && date.getFullYear() === todayTime.getFullYear()){
+        if (date.getDate() === todayTime.getDate() && date.getMonth() === todayTime.getMonth() && date.getFullYear() === todayTime.getFullYear()) {
             selectedDay = "today";
         }
-        else if(date.getDate() === tomorrowTime.getDate() && date.getMonth() === tomorrowTime.getMonth() && date.getFullYear() === tomorrowTime.getFullYear()){
+        else if (date.getDate() === tomorrowTime.getDate() && date.getMonth() === tomorrowTime.getMonth() && date.getFullYear() === tomorrowTime.getFullYear()) {
             selectedDay = "tomorrow";
         }
-        else{
+        else {
             selectedDay = `${date.getDate()} ${date.toLocaleString('en-US', { month: 'short' })}`;
         }
 
@@ -53,11 +55,10 @@ const BusList = () => {
             const baseUrl = "http://localhost:1000/bus-list";
 
             let selectedYear = date.getFullYear();
-            let selectedMonth = date.getMonth()+1;
+            let selectedMonth = date.getMonth() + 1;
             let selectedDay = date.getDate();
 
             const url = `${baseUrl}?destination=${destination}&departure=${departure}&year=${selectedYear}&month=${selectedMonth}&day=${selectedDay}`;
-            console.log(url);
 
             try {
 
@@ -67,7 +68,6 @@ const BusList = () => {
                 // bus number
                 // timing 
                 // fair
-                console.log(data);
 
                 const busList = data.map((bus) => {
 
@@ -75,9 +75,9 @@ const BusList = () => {
                     let depAmount;
                     let fair;
                     const stops = bus.stops;
-                    let depHour,depMin;
-                    let desHour,desMin;
-                    let desTime,depTime;
+                    let depHour, depMin;
+                    let desHour, desMin;
+                    let desTime, depTime;
 
 
                     for (let i = 0; i < stops.length; i++) {
@@ -102,9 +102,9 @@ const BusList = () => {
                     fair = Math.abs(desAmount - depAmount);
 
                     return {
-                        desTime : desTime,
-                        depTime : depTime,
-                        busNumber : bus.busNumber,
+                        desTime: desTime,
+                        depTime: depTime,
+                        busNumber: bus.busNumber,
                         fair: fair,
                     }
                 });
@@ -126,9 +126,9 @@ const BusList = () => {
         return (
             <Bus
                 key={index}
-                busNumber = {bus.busNumber}
-                depTime = {bus.depTime}
-                desTime = {bus.desTime}
+                busNumber={bus.busNumber}
+                depTime={bus.depTime}
+                desTime={bus.desTime}
                 fair={bus.fair}
             />
         )
@@ -139,7 +139,11 @@ const BusList = () => {
 
         <>
             <div className={Classes.nav}>
-                <button className={Classes.btn} onClick={() => setShowModal(true)}>{day}</button>
+                <button className={Classes.btn} onClick={() => setShowModal(true)}>{day}
+                    <span>
+                        <FaAngleDown />
+                    </span>
+                </button>
                 {showModal && <Modal
                     onClick={() => { setShowModal(false) }}
                     onChangeDay={changeDayHandler}
@@ -153,7 +157,7 @@ const BusList = () => {
             />
 
             <ul className={Classes.list}>
-                {listItems.length === 0 ? <p>No bus availble</p> : listItems}
+                {listItems.length === 0 ? <NoBusAvailable day = {day}/> : listItems}
             </ul>
         </>
     );

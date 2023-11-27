@@ -58,45 +58,6 @@ const SearchBus = () => {
         navigate(apiUrl);
 
 
-
-
-        // const busList = data.map((bus)=>{
-
-        //     let desAmount;
-        //     let depAmount;
-        //     let fair;
-        //     const stops = bus.stops;
-
-        //     for(let i=0; i<stops.length; i++){
-
-
-        //         // console.log(stops[i].name);
-
-        //         if(stops[i].name === destination.toUpperCase()){
-        //             desAmount = stops[i].fair;
-        //         }
-        //         else if(stops[i].name === departure.toUpperCase()){
-        //             depAmount = stops[i].fair;
-        //         }
-
-        //     }
-
-        //     fair = Math.abs(desAmount-depAmount);
-        //     console.log(fair);
-
-        //     return {
-        //         destination : destination,
-        //         departure : departure,
-        //         fair : fair,
-        //         // departureTime : "12:50", // have to put in Date() formate
-        //         // dropTime : "11:50"  // have to put in Date() formate
-        //     }
-        // });
-
-        // console.log(data);
-        // navigate("/bus-list", { state: busList });
-
-
     };
 
     return (
