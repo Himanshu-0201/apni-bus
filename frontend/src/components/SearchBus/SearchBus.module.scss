@@ -20,40 +20,51 @@
 // }
 
 .form {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    margin: 20px auto;
-  }
-  
-  .input-div {
-    margin-bottom: 15px;
-  }
-  
-  .input-div input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .form p {
-    color: red;
-    margin: 5px 0;
-  }
-  
- .form button {
-    padding: 10px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
- .form button:hover {
-    background-color: #45a049;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 20px auto;
+}
 
+.input-div {
+  margin-bottom: 15px;
+}
+
+.input-div input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form p {
+  color: red;
+  margin: 5px 0;
+}
+
+.form button {
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form button:hover {
+  background-color: #45a049;
+}
+
+
+.exchange-icon {
+  margin-left: auto;
+  margin-right: 10%;
+  margin-bottom: 10px;
+
+  svg{
+    border: 1px solid;
+    border-radius: 100%;
+    font-size: 1.3rem;
+  }
+}

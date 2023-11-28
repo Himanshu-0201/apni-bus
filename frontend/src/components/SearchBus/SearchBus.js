@@ -2,20 +2,30 @@
 import { useNavigate } from "react-router-dom";
 import Classes from "./SearchBus.module.scss";
 import { useRef, useState } from "react";
+import { CgArrowsExchangeAltV } from "react-icons/cg";
+
 
 const SearchBus = () => {
 
     const navigate = useNavigate();
-    const depRef = useRef();
-    const desRef = useRef();
+    const [dep, setDep] = useState("");
+    const [des, setDes] = useState("");
     const [isDesValid, setIsDesValid] = useState(true);
     const [isDepValid, setIsDepValid] = useState(true);
 
 
+    const exchangeHandler = ()=>{
+        const destination = des;
+        const departure = dep;
+
+        setDep(destination);
+        setDes(departure);
+    }
+
     const isFormValid = () => {
 
-        const destination = desRef.current ? desRef.current.value : "";
-        const departure = depRef.current ? depRef.current.value : "";
+        const destination = des;
+        const departure = dep;
         let fomValid = true;
 
 
@@ -42,21 +52,18 @@ const SearchBus = () => {
     }
 
     const submitHandler = async (event) => {
-        event.preventDefault();
 
+        event.preventDefault();
 
         if (!isFormValid()) {
             return;
         }
 
-        const destination = desRef.current ? desRef.current.value : "";
-        const departure = depRef.current ? depRef.current.value : "";
-
+        const destination = des;
+        const departure = dep;
         const baseUrl = "bus-list";
         const apiUrl = `${baseUrl}?destination=${destination}&departure=${departure}`;
-
         navigate(apiUrl);
-
 
     };
 
@@ -65,12 +72,16 @@ const SearchBus = () => {
         <form className={Classes.form} onSubmit={submitHandler}>
 
             <div className={Classes['input-div']}>
-                <input placeholder="departure station" ref={depRef} />
+                <input placeholder="departure station" value={dep} onChange={(e)=>{setDep(e.target.value)}} />
                 {!isDepValid && <p>Please  enter the departure stattion</p>}
             </div>
 
+            <div className={Classes["exchange-icon"]}>
+                <CgArrowsExchangeAltV onClick={exchangeHandler}/>
+            </div>
+
             <div className={Classes['input-div']}>
-                <input placeholder="destination station" ref={desRef} />
+                <input placeholder="destination station" value={des} onChange={(e)=>{setDes(e.target.value)}}  />
                 {!isDesValid && <p>Please  enter the destionation station</p>}
             </div>
 
