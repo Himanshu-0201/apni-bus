@@ -13,10 +13,16 @@ const SearchBus = () => {
     const [isDesValid, setIsDesValid] = useState(true);
     const [isDepValid, setIsDepValid] = useState(true);
 
+    const ls_des = localStorage.getItem("destination");
+    const ls_dep = localStorage.getItem("departure");
+
 
     const exchangeHandler = ()=>{
-        const destination = des;
-        const departure = dep;
+        const destination = ls_des === null ? "" : ls_des;
+        const departure = ls_dep === null ? "" : ls_dep;
+
+        localStorage.setItem("departure", destination);
+        localStorage.setItem("destination", departure);
 
         setDep(destination);
         setDes(departure);
@@ -24,8 +30,8 @@ const SearchBus = () => {
 
     const isFormValid = () => {
 
-        const destination = des;
-        const departure = dep;
+        const destination = ls_des === null ? "" : ls_des;
+        const departure = ls_dep === null ? "" : ls_dep;
         let fomValid = true;
 
 
@@ -51,6 +57,18 @@ const SearchBus = () => {
 
     }
 
+    const desChangeHandler = (e)=>{
+        const destination = e.target.value;
+        localStorage.setItem("destination", destination);
+        setDes(destination);
+    }
+
+    const depChangeHandler = (e)=>{
+        const departure = e.target.value;
+        localStorage.setItem("departure", departure);
+        setDep(departure);
+    }
+
     const submitHandler = async (event) => {
 
         event.preventDefault();
@@ -72,7 +90,7 @@ const SearchBus = () => {
         <form className={Classes.form} onSubmit={submitHandler}>
 
             <div className={Classes['input-div']}>
-                <input placeholder="departure station" value={dep} onChange={(e)=>{setDep(e.target.value)}} />
+                <input placeholder="departure station" value={ls_dep === null ? "" : ls_dep} onChange={depChangeHandler} />
                 {!isDepValid && <p>Please  enter the departure stattion</p>}
             </div>
 
@@ -81,7 +99,7 @@ const SearchBus = () => {
             </div>
 
             <div className={Classes['input-div']}>
-                <input placeholder="destination station" value={des} onChange={(e)=>{setDes(e.target.value)}}  />
+                <input placeholder="destination station" value={ls_des === null ? "" : ls_des} onChange={desChangeHandler}  />
                 {!isDesValid && <p>Please  enter the destionation station</p>}
             </div>
 
