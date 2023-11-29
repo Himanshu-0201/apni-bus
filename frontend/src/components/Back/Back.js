@@ -7,7 +7,8 @@ const Back = () => {
     const navigate = useNavigate();
 
     return (
-        <span onClick={()=>{navigate(-1)}}>
+        <span onClick={()=>{navigate(-1)}}
+        >
             <IoMdArrowRoundBack />
         </span>
     );
