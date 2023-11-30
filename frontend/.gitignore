@@ -21,3 +21,17 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+# Ignore SCSS generated files
+*.module.css
+*.module.css.map
+
+src/App.css
+src/App.css.map
+src/components/Admin/TimeSelector/TimeSelector.css
+src/components/Admin/TimeSelector/TimeSelector.css.map
+
+
+
+
