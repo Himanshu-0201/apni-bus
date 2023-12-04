@@ -53,7 +53,7 @@ const BusList = () => {
 
         const fetchData = async () => {
 
-            const baseUrl = "http://localhost:1000/bus-list";
+            const baseUrl = "https://apni-bus-backend.onrender.com/bus-list";
 
             let selectedYear = date.getFullYear();
             let selectedMonth = date.getMonth() + 1;
