@@ -4,6 +4,7 @@ import { stationList } from "../../Data/StationList";
 import Classes from "./BusRoute.module.scss";
 import { useLocation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { baseUrl } from "../../Data/UrlFile";
 
 const BusRoute = () => {
 
@@ -19,9 +20,10 @@ const BusRoute = () => {
         else{
 
             const fetchData = async ()=>{
-                const baseUrl = "http://localhost:1000/bus";
+                // const baseUrl = "http://localhost:1000/bus";
+                const route = "bus";
                 const busId = params.busId;
-                const apiUrl = `${baseUrl}/${busId}`;
+                const apiUrl = `${baseUrl}/${route}/${busId}`;
             
                 const response = await fetch(apiUrl);
                 const data = await response.json();

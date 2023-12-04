@@ -9,6 +9,7 @@ import Classes from "./BusList.module.scss";
 import TravelStations from "../TravelStations/TravelStations";
 import NoBusAvailable from "../NoBusAvailable/NoBusAvailable";
 import Back from "../Back/Back";
+import { baseUrl } from "../../Data/UrlFile";
 
 const BusList = () => {
 
@@ -53,13 +54,13 @@ const BusList = () => {
 
         const fetchData = async () => {
 
-            const baseUrl = "https://apni-bus-backend.onrender.com/bus-list";
+            const route = "bus-list";
 
             let selectedYear = date.getFullYear();
             let selectedMonth = date.getMonth() + 1;
             let selectedDay = date.getDate();
 
-            const url = `${baseUrl}?destination=${destination}&departure=${departure}&year=${selectedYear}&month=${selectedMonth}&day=${selectedDay}`;
+            const url = `${baseUrl}/${route}?destination=${destination}&departure=${departure}&year=${selectedYear}&month=${selectedMonth}&day=${selectedDay}`;
 
             try {
 
