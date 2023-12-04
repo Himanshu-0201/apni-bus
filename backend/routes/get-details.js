@@ -1,7 +1,7 @@
 
 import express from "express";
 
-import { searchBuses } from "../controllers/get-details.js";
+import { getBusByID, searchBuses } from "../controllers/get-details.js";
 
 const route = express.Router();
 
@@ -9,6 +9,8 @@ const route = express.Router();
 route.get('/search-buses', searchBuses);
 
 route.get('/bus-list', searchBuses);
+
+route.get('/bus/:busId', getBusByID);
 
 
 

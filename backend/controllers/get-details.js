@@ -42,3 +42,17 @@ export const searchBuses = (req, res)=>{
 
 
 };
+
+
+export const getBusByID = (req, res)=>{
+    const busId = req.params.busId;
+
+    Bus.findOne({_id : busId})
+    .then(bus => {
+        console.log(bus);
+        return res.send(bus);
+    })
+    .catch(error => {
+        console.log(error);
+    })
+}
