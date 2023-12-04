@@ -1,0 +1,10 @@
+.days {
+  list-style: none;
+  display: flex;
+  justify-content: right;
+  margin-right: 5%;
+  padding-top: 1%;
+}
+.days li {
+  padding: 0.4%;
+}/*# sourceMappingURL=Week.module.css.map */

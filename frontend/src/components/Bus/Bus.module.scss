@@ -1,14 +1,11 @@
-.list-item{
+.list-item {
+    display: flex;
+    padding: 6% 0;
     border: 1px solid blue;
     border-top: none;
-    padding: 6% 0;
-}
-
-.div1 {
-    display: flex;
     font-weight: bold;
+    cursor: pointer;
 }
-
 
 .times {
     display: flex;

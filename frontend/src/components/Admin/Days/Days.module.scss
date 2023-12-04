@@ -1,0 +1,14 @@
+.wrapper{
+    display: flex;
+
+    p{
+        padding: 2px 4px;
+        border: 1px solid #D0D0D0;
+        margin-left: 5px;
+        cursor: pointer;
+    }
+
+    p:first-child{
+        margin-left: 0;
+    }
+}

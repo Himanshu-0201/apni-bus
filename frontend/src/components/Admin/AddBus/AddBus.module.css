@@ -1,0 +1,66 @@
+.add-bus-form {
+  padding: 5% 10%;
+}
+.add-bus-form .add-bus-input {
+  margin-bottom: 5%;
+}
+.add-bus-form .add-bus-label {
+  display: block;
+}
+
+.add-bus-form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-bus-form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.add-bus-form input {
+  padding: 10px 14px;
+}
+.add-bus-form .add-bus-div {
+  margin-bottom: 15px;
+}
+.add-bus-form .add-bus-div .add-bus-label {
+  display: block;
+}
+.add-bus-form .add-bus-div .add-bus-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.add-bus-form .add-bus-div .add-bus-p {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.add-bus-form .add-bus-div .add-bus-btn {
+  padding: 8px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.add-bus-form .add-bus-div .add-bus-btn:hover {
+  background-color: #0056b3;
+}
+
+.submit-btn {
+  margin-left: 2%;
+}
+
+.para {
+  margin-bottom: 10px;
+}/*# sourceMappingURL=AddBus.module.css.map */

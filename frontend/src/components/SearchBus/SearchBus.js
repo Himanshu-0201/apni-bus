@@ -3,35 +3,32 @@ import { useNavigate } from "react-router-dom";
 import Classes from "./SearchBus.module.scss";
 import { useRef, useState } from "react";
 import { CgArrowsExchangeAltV } from "react-icons/cg";
-
+import Dropdown from "../Dropdown/Dropdown";
 
 const SearchBus = () => {
 
     const navigate = useNavigate();
-    const [dep, setDep] = useState("");
-    const [des, setDes] = useState("");
     const [isDesValid, setIsDesValid] = useState(true);
     const [isDepValid, setIsDepValid] = useState(true);
+    const [dep, setDep] = useState("");
+    const [des, setDes] = useState("");
 
-    const ls_des = localStorage.getItem("destination");
-    const ls_dep = localStorage.getItem("departure");
+    const [refresh, setRefresh] = useState(false);
 
+    const localStorage_des = localStorage.getItem("destination");
+    const localStorage_dep = localStorage.getItem("departure");
 
-    const exchangeHandler = ()=>{
-        const destination = ls_des === null ? "" : ls_des;
-        const departure = ls_dep === null ? "" : ls_dep;
-
-        localStorage.setItem("departure", destination);
-        localStorage.setItem("destination", departure);
-
-        setDep(destination);
-        setDes(departure);
+    const refreshPage = ()=>{
+        setRefresh(pre => !pre);
     }
+
+
+
 
     const isFormValid = () => {
 
-        const destination = ls_des === null ? "" : ls_des;
-        const departure = ls_dep === null ? "" : ls_dep;
+        const destination = localStorage_des === null ? "" : localStorage_des;
+        const departure = localStorage_dep === null ? "" : localStorage_dep;
         let fomValid = true;
 
 
@@ -52,55 +49,84 @@ const SearchBus = () => {
         }
 
 
-
         return fomValid;
 
     }
 
-    const desChangeHandler = (e)=>{
-        const destination = e.target.value;
-        localStorage.setItem("destination", destination);
-        setDes(destination);
+    const selectDepVal = (departure)=>{
+        localStorage.setItem("departure", departure);
+        refreshPage();
     }
 
-    const depChangeHandler = (e)=>{
-        const departure = e.target.value;
-        localStorage.setItem("departure", departure);
-        setDep(departure);
+    const selectDesVal = (destination)=>{
+        localStorage.setItem("destination", destination);
+        refreshPage();
     }
+
+    const exchangeStationHandler = () => {
+
+        const destination = localStorage_des === null ? "" : localStorage_des;
+        const departure = localStorage_dep === null ? "" : localStorage_dep;
+
+        localStorage.setItem("departure", destination);
+        localStorage.setItem("destination", departure);
+
+        refreshPage();
+
+    }
+
 
     const submitHandler = async (event) => {
-
         event.preventDefault();
+
 
         if (!isFormValid()) {
             return;
         }
 
-        const destination = des;
-        const departure = dep;
+
+        const destination = localStorage_des;
+        const departure = localStorage_dep;
+
         const baseUrl = "bus-list";
         const apiUrl = `${baseUrl}?destination=${destination}&departure=${departure}`;
+
         navigate(apiUrl);
 
+
     };
+
+
+
 
     return (
 
         <form className={Classes.form} onSubmit={submitHandler}>
 
             <div className={Classes['input-div']}>
-                <input placeholder="departure station" value={ls_dep === null ? "" : ls_dep} onChange={depChangeHandler} />
-                {!isDepValid && <p>Please  enter the departure stattion</p>}
+                {/* <input placeholder="departure station" value={localStorage_dep === null ? "" : localStorage_dep} onChange={depStationChangeHandler} /> */}
+                <Dropdown
+                    placeholder = "departure station"
+                    selectVal={selectDepVal}
+                    selectedVal = {localStorage_dep}
+                />
+
+
+                {!isDepValid && <p className={Classes.warning}>Please  enter the departure stattion</p>}
             </div>
 
-            <div className={Classes["exchange-icon"]}>
-                <CgArrowsExchangeAltV onClick={exchangeHandler}/>
+            <div className={Classes["exchange-station"]}>
+                <CgArrowsExchangeAltV onClick={exchangeStationHandler} />
             </div>
 
             <div className={Classes['input-div']}>
-                <input placeholder="destination station" value={ls_des === null ? "" : ls_des} onChange={desChangeHandler}  />
-                {!isDesValid && <p>Please  enter the destionation station</p>}
+                {/* <input placeholder="destination station" value={localStorage_des === null ? "" : localStorage_des} onChange={desStationChangeHandler} /> */}
+                <Dropdown
+                    placeholder = "destination station"
+                    selectVal={selectDesVal}
+                    selectedVal = {localStorage_des}
+                />
+                {!isDesValid && <p className={Classes.warning}>Please  enter the destionation station</p>}
             </div>
 
             <button>Submit</button>

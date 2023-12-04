@@ -13,6 +13,7 @@ import { useCallback, useState } from "react";
 import Classes from "./AddBus.module.scss";
 import Stop from "../Stop/Stop";
 import TimeSelector from "../TimeSelector/TimeSelector";
+import Days from "../Days/Days";
 
 const fistStop = {
     stopName: "",
@@ -25,6 +26,12 @@ const fistStop = {
 const AddBus = () => {
 
     const [stopsList, setStopsList] = useState([fistStop]);
+    const [busNumber, setBusNumber] = useState("");
+    const [startStation, setStartStation] = useState("");
+    const [endStation, setEndStation] = useState("");
+    const [isBusNumberValid, setIsBusNumberValid] = useState(true);
+    const [isStartStationValid, setIsStartStationValid] = useState(true);
+    const [isEndStationValid, setIsEndStationValid] = useState(true);
 
     const addStopsHandler = () => {
         setStopsList(pre => {
@@ -78,6 +85,18 @@ const AddBus = () => {
     const formSubmitHandler = (event) => {
         event.preventDefault();
 
+        const len_of_busNumber = busNumber.trim().length;
+        const len_of_startStation = startStation.trim().length;
+        const len_of_endStation = endStation.trim().length;
+
+        setIsBusNumberValid(len_of_busNumber !== 0);
+        setIsStartStationValid(len_of_startStation !== 0);
+        setIsEndStationValid(len_of_endStation !== 0);
+
+
+        if(len_of_busNumber === 0 || len_of_startStation === 0 || len_of_endStation === 0){
+            return ;
+        }
     }
 
     const stopsListElement = stopsList.map((stop, index) => {
@@ -105,11 +124,11 @@ const AddBus = () => {
         <form onSubmit={formSubmitHandler} className={Classes['add-bus-form']}>
             <div className={Classes["add-bus-div"]}>
                 <label className={Classes["add-bus-label"]}>Bus number</label>
-                <input className={Classes["add-bus-input"]}/>
+                <input className={Classes["add-bus-input"]} value={busNumber} onChange={(e)=>{setBusNumber(e.target.value)}}/>
             </div>
             <div className={Classes["add-bus-div"]}>
                 <label className={Classes["add-bus-label"]}> starting station</label>
-                <input className={Classes["add-bus-input"]}/>
+                <input className={Classes["add-bus-input"]} value={startStation} onChange={(e)=>{setStartStation(e.target.value)}} />
                 <label className={Classes["add-bus-label"]}> departure time at starting station</label>
                 {/* <input /> */}
                 <TimeSelector />
@@ -117,10 +136,17 @@ const AddBus = () => {
 
             <div className={Classes["add-bus-div"]}>
                 <label className={Classes["add-bus-label"]}> end station</label>
-                <input className={Classes["add-bus-input"]}/>
+                <input className={Classes["add-bus-input"]} value={endStation} onChange={(e)=>{setEndStation(e.target.value)}}/>
                 <label className={Classes["add-bus-label"]}> arriving time at end station</label>
                 {/* <input value="" /> */}
                 <TimeSelector />
+            </div>
+
+            <div className={Classes["select-days"]}>
+                <div className={Classes.label}>
+                    <p> Runs on</p>
+                </div>
+                <Days />
             </div>
 
             <div className={Classes["add-bus-div"]}>

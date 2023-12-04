@@ -29,6 +29,8 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 function TimeSelector() {
 
+  const currentDate = dayjs();
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer
@@ -41,7 +43,7 @@ function TimeSelector() {
       >
 
         <DemoItem >
-          <DateTimePicker defaultValue={dayjs('2022-04-17T15:30')} />
+          <DateTimePicker defaultValue={dayjs(currentDate)} />
         </DemoItem>
 
       </DemoContainer>

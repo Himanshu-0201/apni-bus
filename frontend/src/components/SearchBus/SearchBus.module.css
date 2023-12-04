@@ -17,6 +17,11 @@
   border-radius: 4px;
 }
 
+.form p {
+  color: red;
+  margin: 5px 0;
+}
+
 .form button {
   padding: 10px;
   background-color: #4caf50;
@@ -30,19 +35,14 @@
   background-color: #45a049;
 }
 
-.exchange-station {
+.exchange-icon {
   margin-left: auto;
   margin-right: 10%;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.exchange-icon svg {
+  border: 1px solid;
+  border-radius: 100%;
   font-size: 1.3rem;
-
-  svg {
-    border: 1px solid;
-    border-radius: 90%;
-    cursor: pointer;
-  }
-}
-
-.warning {
-  color: red;
-  margin: 5px 0;
-}
+}/*# sourceMappingURL=SearchBus.module.css.map */

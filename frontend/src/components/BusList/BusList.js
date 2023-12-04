@@ -8,6 +8,7 @@ import Modal from "../Modal/Modal";
 import Classes from "./BusList.module.scss";
 import TravelStations from "../TravelStations/TravelStations";
 import NoBusAvailable from "../NoBusAvailable/NoBusAvailable";
+import Back from "../Back/Back";
 
 const BusList = () => {
 
@@ -69,7 +70,9 @@ const BusList = () => {
                 // timing 
                 // fair
 
+
                 const busList = data.map((bus) => {
+                    
 
                     let desAmount;
                     let depAmount;
@@ -99,6 +102,7 @@ const BusList = () => {
                     desTime = `${desHour}:${desMin}`;
                     depTime = `${depHour}:${depMin}`;
 
+
                     fair = Math.abs(desAmount - depAmount);
 
                     return {
@@ -106,8 +110,11 @@ const BusList = () => {
                         depTime: depTime,
                         busNumber: bus.busNumber,
                         fair: fair,
+                        _id : bus._id,
+                        stops : bus.stops
                     }
                 });
+
 
                 setBusList(busList);
 
@@ -130,6 +137,8 @@ const BusList = () => {
                 depTime={bus.depTime}
                 desTime={bus.desTime}
                 fair={bus.fair}
+                _id = {bus._id}
+                stops = {bus.stops}
             />
         )
     });
@@ -159,6 +168,7 @@ const BusList = () => {
             <ul className={Classes.list}>
                 {listItems.length === 0 ? <NoBusAvailable day = {day}/> : listItems}
             </ul>
+
         </>
     );
 

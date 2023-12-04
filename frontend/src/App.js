@@ -5,7 +5,7 @@ import BusList from './components/BusList/BusList';
 import SearchBus from "./components/SearchBus/SearchBus";
 import Calendar from './components/Calendar/Calendar';
 import AddBus from './components/Admin/AddBus/AddBus';
-import TimeInterval from './components/Admin/TimeSelector/TimeSelector';
+import BusRoute from './components/BusRoute/BusRoute';
 
 
 const router = createBrowserRouter([
@@ -23,24 +23,25 @@ const router = createBrowserRouter([
 
       },
       {
+        path : "bus-route/:busId",
+        element : <BusRoute />
+      },
+      {
         path: "calendar",
         element: <Calendar />
       }
     ]
   },
-
   {
     path: "/admin",
     children: [
       {
-        path: "", // replace it by path : "add-bus"
+        path: "", 
         index: true,
         element: <AddBus />
-        // element : <TimeInterval />
       }
     ]
-  }
-
+  },
 
 ]);
 
