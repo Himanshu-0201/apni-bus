@@ -1,0 +1,31 @@
+.list-item {
+    display: flex;
+    padding: 6% 0;
+    border: 1px solid blue;
+    border-top: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.times {
+    display: flex;
+    width: 70%;
+    margin-left: 5%;
+
+    p {
+        width: 50%;
+    }
+}
+
+.bus-number {
+    width: 30%;
+    margin-left: 5%;
+
+    p {
+        background: #333566;
+        color: white;
+        display: inline;
+        padding: 4% 7%;
+        border-radius: 3px;
+    }
+}

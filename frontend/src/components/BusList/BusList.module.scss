@@ -1,0 +1,32 @@
+.nav {
+    background-color: #0066cc;
+    padding: 2% 0;
+    padding-top: 3%;
+
+    .btn {
+        margin-left: 5%;
+        padding: 2% 7%;
+        border-top-left-radius: 50px;
+        border-bottom-left-radius: 50px;
+        border-top-right-radius: 50px;
+        border-bottom-right-radius: 50px;
+        background-color: #333566;
+        border: 1px solid white;
+        color: white;
+
+        span {
+            margin-left: 5px;
+        }
+
+        svg{
+            vertical-align: bottom;
+        }
+    }
+}
+
+.list{
+    // width: 60%;
+    margin: auto;
+    // margin-top: 1rem;
+    padding: 0; // I don't know why it's takin
+}

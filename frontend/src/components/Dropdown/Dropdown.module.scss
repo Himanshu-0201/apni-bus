@@ -1,0 +1,24 @@
+$pad : 8px 10px;
+
+.wrapper{
+    position: relative;
+}
+
+.drop-down{
+    position: absolute;
+    width: -webkit-fill-available;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 50;
+}
+
+.drop-down-element{
+    padding: $pad;
+    cursor: pointer;
+}
+
+.input{
+    padding: $pad;
+}
