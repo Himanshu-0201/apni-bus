@@ -4,6 +4,9 @@ import Classes from "./SearchBus.module.scss";
 import { useRef, useState } from "react";
 import { CgArrowsExchangeAltV } from "react-icons/cg";
 import Dropdown from "../Dropdown/Dropdown";
+import { LiaCircle } from "react-icons/lia";
+import { FaArrowDown } from "react-icons/fa6";
+import { IoIosArrowRoundDown } from "react-icons/io";
 
 const SearchBus = () => {
 
@@ -18,7 +21,7 @@ const SearchBus = () => {
     const localStorage_des = localStorage.getItem("destination");
     const localStorage_dep = localStorage.getItem("departure");
 
-    const refreshPage = ()=>{
+    const refreshPage = () => {
         setRefresh(pre => !pre);
     }
 
@@ -53,12 +56,12 @@ const SearchBus = () => {
 
     }
 
-    const selectDepVal = (departure)=>{
+    const selectDepVal = (departure) => {
         localStorage.setItem("departure", departure);
         refreshPage();
     }
 
-    const selectDesVal = (destination)=>{
+    const selectDesVal = (destination) => {
         localStorage.setItem("destination", destination);
         refreshPage();
     }
@@ -103,31 +106,55 @@ const SearchBus = () => {
 
         <form className={Classes.form} onSubmit={submitHandler}>
 
-            <div className={Classes['input-div']}>
-                {/* <input placeholder="departure station" value={localStorage_dep === null ? "" : localStorage_dep} onChange={depStationChangeHandler} /> */}
-                <Dropdown
-                    placeholder = "departure station"
-                    selectVal={selectDepVal}
-                    selectedVal = {localStorage_dep}
-                />
+            <div className={Classes.container}>
+
+                <div className={Classes.symbols}>
+
+                    <div>
+                        <LiaCircle />
+                    </div>
+
+                    <div className={Classes.arrow}>
+                        <IoIosArrowRoundDown />
+                    </div>
+
+                    <div>
+                        <LiaCircle />
+                    </div>
+                </div>
 
 
-                {!isDepValid && <p className={Classes.warning}>Please  enter the departure stattion</p>}
+                <div>
+                    <div className={Classes['input-div']}>
+
+
+                        <Dropdown
+                            placeholder="departure station"
+                            selectVal={selectDepVal}
+                            selectedVal={localStorage_dep}
+                        />
+
+                        {!isDepValid && <p className={Classes.warning}>Please  enter the departure stattion</p>}
+                    </div>
+
+                    <div className={Classes["exchange-station"]}>
+                        <CgArrowsExchangeAltV onClick={exchangeStationHandler} />
+                    </div>
+
+                    <div className={Classes['input-div']}>
+
+                        <Dropdown
+                            placeholder="destination station"
+                            selectVal={selectDesVal}
+                            selectedVal={localStorage_des}
+                        />
+                        {!isDesValid && <p className={Classes.warning}>Please  enter the destionation station</p>}
+                    </div>
+                </div>
+
             </div>
 
-            <div className={Classes["exchange-station"]}>
-                <CgArrowsExchangeAltV onClick={exchangeStationHandler} />
-            </div>
 
-            <div className={Classes['input-div']}>
-                {/* <input placeholder="destination station" value={localStorage_des === null ? "" : localStorage_des} onChange={desStationChangeHandler} /> */}
-                <Dropdown
-                    placeholder = "destination station"
-                    selectVal={selectDesVal}
-                    selectedVal = {localStorage_des}
-                />
-                {!isDesValid && <p className={Classes.warning}>Please  enter the destionation station</p>}
-            </div>
 
             <button>Submit</button>
         </form>

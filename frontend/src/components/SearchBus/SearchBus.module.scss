@@ -31,8 +31,9 @@
 }
 
 .exchange-station {
-  margin-left: auto;
-  margin-right: 10%;
+  // margin-left: auto;
+  // margin-right: 10%;
+  margin-left: 90%;
   font-size: 1.3rem;
 
   svg {
@@ -45,4 +46,30 @@
 .warning {
   color: red;
   margin: 5px 0;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 10% auto;
+}
+
+.symbols {
+  display: grid;
+  grid-template-rows: 10% auto 30%;
+
+  div {
+    text-align: center;
+  }
+}
+
+.arrow {
+  position: relative;
+
+  svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: -webkit-xxx-large;
+  }
 }

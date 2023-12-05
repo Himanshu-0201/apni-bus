@@ -1,17 +1,23 @@
-
-.station{
+.station {
     padding: 0px 12px;
 
-    p{
+    p {
         display: inline;
         vertical-align: top;
         margin-left: 15px;
     }
 }
 
-.station:last-child{
+.station:last-child {
+
     // background-color: red;
-    .vertical-line{
+    .vertical-line {
         display: none;
     }
+}
+
+.loading {
+    text-align: center;
+    margin-top: 40%;
+    font-size: 2rem;
 }

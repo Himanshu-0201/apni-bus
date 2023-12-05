@@ -17,6 +17,7 @@ const BusList = () => {
     const [busList, setBusList] = useState([]);
     const [date, setDate] = useState(new Date());
     const [day, setDay] = useState("today");
+    const [isLoading, setIsLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
 
@@ -55,12 +56,12 @@ const BusList = () => {
         const fetchData = async () => {
 
             const route = "bus-list";
-
             let selectedYear = date.getFullYear();
             let selectedMonth = date.getMonth() + 1;
             let selectedDay = date.getDate();
 
             const url = `${baseUrl}/${route}?destination=${destination}&departure=${departure}&year=${selectedYear}&month=${selectedMonth}&day=${selectedDay}`;
+
 
             try {
 
@@ -73,7 +74,7 @@ const BusList = () => {
 
 
                 const busList = data.map((bus) => {
-                    
+
 
                     let desAmount;
                     let depAmount;
@@ -111,8 +112,8 @@ const BusList = () => {
                         depTime: depTime,
                         busNumber: bus.busNumber,
                         fair: fair,
-                        _id : bus._id,
-                        stops : bus.stops
+                        _id: bus._id,
+                        stops: bus.stops
                     }
                 });
 
@@ -123,9 +124,13 @@ const BusList = () => {
                 console.log(error);
             }
 
+            setIsLoading(false);
+
         }
 
+        setIsLoading(true);
         fetchData();
+
 
     }, [date]);
 
@@ -138,8 +143,8 @@ const BusList = () => {
                 depTime={bus.depTime}
                 desTime={bus.desTime}
                 fair={bus.fair}
-                _id = {bus._id}
-                stops = {bus.stops}
+                _id={bus._id}
+                stops={bus.stops}
             />
         )
     });
@@ -147,7 +152,7 @@ const BusList = () => {
 
     return (
 
-        <>
+        <div className={Classes["bus-list-wrapper"]}>
             <div className={Classes.nav}>
                 <button className={Classes.btn} onClick={() => setShowModal(true)}>{day}
                     <span>
@@ -167,10 +172,12 @@ const BusList = () => {
             />
 
             <ul className={Classes.list}>
-                {listItems.length === 0 ? <NoBusAvailable day = {day}/> : listItems}
+                {/* {listItems.length === 0 ? <NoBusAvailable day = {day}/> : listItems} */}
+                { isLoading === true ? <p className={Classes.loading}>Loading...</p> : listItems.length === 0 ? <NoBusAvailable day={day} /> : listItems}
+
             </ul>
 
-        </>
+        </div>
     );
 
 };

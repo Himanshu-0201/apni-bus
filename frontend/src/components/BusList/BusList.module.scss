@@ -1,7 +1,18 @@
-.nav {
-    background-color: #0066cc;
-    padding: 2% 0;
-    padding-top: 3%;
+.bus-list-wrapper {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 100vh;
+
+    .nav {
+        border-radius: 8px 8px 0 0;
+        background-color: #0066cc;
+        padding: 2% 0;
+        padding-top: 3%;
+    }
 
     .btn {
         margin-left: 5%;
@@ -18,15 +29,30 @@
             margin-left: 5px;
         }
 
-        svg{
+        svg {
             vertical-align: bottom;
         }
     }
+
+    li:last-child {
+        border-radius: 0 0 8px 8px;
+    }
+
+    @media (max-width : 500px) {
+        margin: 0;
+        padding: 0;
+    }
 }
 
-.list{
+.list {
     // width: 60%;
     margin: auto;
     // margin-top: 1rem;
     padding: 0; // I don't know why it's takin
+}
+
+.loading {
+    text-align: center;
+    margin-top: 40%;
+    font-size: 2rem;
 }

@@ -1,6 +1,6 @@
 import { HiEllipsisVertical } from "react-icons/hi2";
 import { FaRegCircleDot } from "react-icons/fa6";
-import { stationList } from "../../Data/StationList";
+// import { stationList } from "../../Data/StationList";
 import Classes from "./BusRoute.module.scss";
 import { useLocation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import { baseUrl } from "../../Data/UrlFile";
 const BusRoute = () => {
 
     const [stopsList, setStopsList] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const {state} = useLocation();
     const params = useParams();
 
@@ -20,7 +21,6 @@ const BusRoute = () => {
         else{
 
             const fetchData = async ()=>{
-                // const baseUrl = "http://localhost:1000/bus";
                 const route = "bus";
                 const busId = params.busId;
                 const apiUrl = `${baseUrl}/${route}/${busId}`;
@@ -29,8 +29,11 @@ const BusRoute = () => {
                 const data = await response.json();
 
                 setStopsList(data.stops);
+                setIsLoading(false);
             }
 
+
+            setIsLoading(true);
             fetchData();
 
         }
@@ -57,7 +60,7 @@ const BusRoute = () => {
 
     return (
         <div className={Classes["staion-list"]}>
-            {stations}
+         {isLoading ? <p Classes={Classes.loading}>Loading</p> : stations}  
         </div>
     )
 };
