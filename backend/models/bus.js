@@ -8,13 +8,10 @@ const busSchema = new Schema({
     },
     stops: [
         {
-            name: { type: String, required: true },
+            stopName: { type: String, required: true },
             fair: { type: String, require: true },
-            year : {type : String, required : true},
-            month : {type : String, required : true},
-            day : {type : String, required : true},
-            hour : {type : String, required : true},
-            minites : {type : String, required : true}
+            arriveDate : {type : Date, require : true},
+            departureDate : {type : Date, require : true}
         }
     ]
 });

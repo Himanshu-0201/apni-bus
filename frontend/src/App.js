@@ -6,6 +6,7 @@ import SearchBus from "./components/SearchBus/SearchBus";
 import Calendar from './components/Calendar/Calendar';
 import AddBus from './components/Admin/AddBus/AddBus';
 import BusRoute from './components/BusRoute/BusRoute';
+import { busStationLoader } from './components/Dropdown/Dropdown';
 
 
 const router = createBrowserRouter([
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
+        loader :  busStationLoader,
         element: <SearchBus />,
       },
       {

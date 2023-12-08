@@ -14,28 +14,49 @@ import Classes from "./AddBus.module.scss";
 import Stop from "../Stop/Stop";
 import TimeSelector from "../TimeSelector/TimeSelector";
 import Days from "../Days/Days";
+import HorizontalLine from "../../HorizontalLine/HorizontalLine";
+import { baseUrl } from "../../../Data/UrlFile";
+import dayjs from "dayjs";
 
-const fistStop = {
+
+const stop = {
     stopName: "",
-    arriveTime: "",
-    stopDuration: ""
+    fair: 0,
+    arriveDate: "",
+    departureDate: ""
 }
 
 
 
 const AddBus = () => {
 
-    const [stopsList, setStopsList] = useState([fistStop]);
+
+    const currentDate = dayjs();
+
+    const [stopsList, setStopsList] = useState([{
+        ...stop,
+        arriveDate: currentDate,
+        departureDate: currentDate
+    }]);
+
     const [busNumber, setBusNumber] = useState("");
-    const [startStation, setStartStation] = useState("");
-    const [endStation, setEndStation] = useState("");
     const [isBusNumberValid, setIsBusNumberValid] = useState(true);
-    const [isStartStationValid, setIsStartStationValid] = useState(true);
-    const [isEndStationValid, setIsEndStationValid] = useState(true);
+
+    const validFormHandler = () => {
+
+        const len_of_busNumber = busNumber.trim().length;
+        setIsBusNumberValid(len_of_busNumber != 0);
+        const isFormValid = len_of_busNumber != 0;
+        return isFormValid;
+    }
 
     const addStopsHandler = () => {
         setStopsList(pre => {
-            const updatedStopsList = [...stopsList, { id: stopsList.length }];
+            const updatedStopsList = [...pre, {
+                ...stop,
+                arriveDate: currentDate,
+                departureDate: currentDate
+            }];
             return updatedStopsList;
         })
     };
@@ -53,11 +74,14 @@ const AddBus = () => {
 
     }, []);
 
-    // id could be index
 
-    const changeHandler = useCallback((event, stopNumber) => {
-        const inputName = event.target.name;
-        const updatedInputValue = event.target.value;
+    const changeHandler = useCallback((inputValue, inputName, stopNumber) => {
+
+        // inputValue should be in dayjs() formate for arrive date
+        // inputValue should be in dayjs() formate for arrive date
+
+        const updatedInputValue = inputValue;
+
 
         setStopsList(preStopsList => {
 
@@ -68,9 +92,9 @@ const AddBus = () => {
                 if (index === stopNumber) {
                     if (inputName === "stop name") updatedStop.stopName = updatedInputValue;
 
-                    if (inputName === "stop arrive time") updatedStop.arriveTime = updatedInputValue;
+                    if (inputName === "arrive date") updatedStop.arriveDate = updatedInputValue;
 
-                    if (inputName === "stop duration") updatedStop.stopDuration = updatedInputValue;
+                    if (inputName === "departure date") updatedStop.departureDate = updatedInputValue;
                 }
 
                 return updatedStop;
@@ -82,21 +106,65 @@ const AddBus = () => {
 
     }, []);
 
-    const formSubmitHandler = (event) => {
+
+    // console.log(stopsList)
+
+    const formSubmitHandler = async (event) => {
         event.preventDefault();
 
-        const len_of_busNumber = busNumber.trim().length;
-        const len_of_startStation = startStation.trim().length;
-        const len_of_endStation = endStation.trim().length;
+        // if (!validFormHandler()) {
+        //     return;
+        // }
 
-        setIsBusNumberValid(len_of_busNumber !== 0);
-        setIsStartStationValid(len_of_startStation !== 0);
-        setIsEndStationValid(len_of_endStation !== 0);
+        const busNumber = event.target["bus number"].value;
 
+        // steps : convert stops[i].arriveDate and stops[i].departureDate in string formate
 
-        if(len_of_busNumber === 0 || len_of_startStation === 0 || len_of_endStation === 0){
-            return ;
+        const stops = stopsList.map(stop => {
+
+            const updatedStop = {
+                ...stop,
+                arriveDate: dayjs(stop.arriveDate).format("YYYY-MM-DDTHH:mm"),
+                departureDate: dayjs(stop.departureDate).format("YYYY-MM-DDTHH:mm")
+            }
+
+            console.log(updatedStop);
+
+            return updatedStop;
+
+        })
+
+        console.log(stops);
+
+        const postData = {
+            busNumber: busNumber,
+            stops: stops
         }
+
+        try {
+
+            const route = "add-bus";
+            const apiUrl = `${baseUrl}/${route}`;
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Add any other headers as needed
+                },
+                body: JSON.stringify(postData),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('Response Data:', data);
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+
     }
 
     const stopsListElement = stopsList.map((stop, index) => {
@@ -107,9 +175,9 @@ const AddBus = () => {
             <Stop
                 key={index}
                 stopNumber={stopNumber}
-                arriveTime={stop.arriveTime}
                 stopName={stop.stopName}
-                stopDuration={stop.stopDuration}
+                arriveDate={stop.arriveDate}
+                departureDate={stop.departureDate}
                 onChange={changeHandler}
                 onClick={removeStopHandler}
             />
@@ -124,38 +192,25 @@ const AddBus = () => {
         <form onSubmit={formSubmitHandler} className={Classes['add-bus-form']}>
             <div className={Classes["add-bus-div"]}>
                 <label className={Classes["add-bus-label"]}>Bus number</label>
-                <input className={Classes["add-bus-input"]} value={busNumber} onChange={(e)=>{setBusNumber(e.target.value)}}/>
-            </div>
-            <div className={Classes["add-bus-div"]}>
-                <label className={Classes["add-bus-label"]}> starting station</label>
-                <input className={Classes["add-bus-input"]} value={startStation} onChange={(e)=>{setStartStation(e.target.value)}} />
-                <label className={Classes["add-bus-label"]}> departure time at starting station</label>
-                {/* <input /> */}
-                <TimeSelector />
+                <input className={Classes["add-bus-input"]} name="bus number" value={busNumber} onChange={(e) => { setBusNumber(e.target.value) }} />
+                {isBusNumberValid ? "" : <p className={Classes.warning}> Please enter the bus number </p>}
             </div>
 
-            <div className={Classes["add-bus-div"]}>
-                <label className={Classes["add-bus-label"]}> end station</label>
-                <input className={Classes["add-bus-input"]} value={endStation} onChange={(e)=>{setEndStation(e.target.value)}}/>
-                <label className={Classes["add-bus-label"]}> arriving time at end station</label>
-                {/* <input value="" /> */}
-                <TimeSelector />
-            </div>
 
-            <div className={Classes["select-days"]}>
+            {/* <div className={Classes["select-days"]}>
                 <div className={Classes.label}>
                     <p> Runs on</p>
                 </div>
                 <Days />
-            </div>
+            </div> */}
+
+            <HorizontalLine />
 
             <div className={Classes["add-bus-div"]}>
                 <p className={Classes.para}>Stops</p>
-
                 {stopsListElement}
-
-                <button className={Classes["add-bus-btn"]}  onClick={addStopsHandler}>Add stop</button>
-                <button className={`${Classes['submit-btn']} ${Classes["add-bus-btn"]}`}>Submit</button>
+                <button className={Classes["add-bus-btn"]} onClick={addStopsHandler} type="button">Add stop</button>
+                <button className={`${Classes['submit-btn']} ${Classes["add-bus-btn"]}`} type="submit">Submit</button>
             </div>
 
         </form>

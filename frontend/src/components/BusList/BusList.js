@@ -56,22 +56,23 @@ const BusList = () => {
         const fetchData = async () => {
 
             const route = "bus-list";
-            let selectedYear = date.getFullYear();
-            let selectedMonth = date.getMonth() + 1;
-            let selectedDay = date.getDate();
 
-            const url = `${baseUrl}/${route}?destination=${destination}&departure=${departure}&year=${selectedYear}&month=${selectedMonth}&day=${selectedDay}`;
+            const formattedDateTime = date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour12: false, // Use 24-hour format
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+              });
 
+            const apiUrl = `${baseUrl}/${route}?destination=${destination}&departure=${departure}&date=${formattedDateTime}`
 
             try {
 
-                const response = await fetch(url);
+                const response = await fetch(apiUrl);
                 const data = await response.json();
-
-                // bus number
-                // timing 
-                // fair
-
 
                 const busList = data.map((bus) => {
 
@@ -87,16 +88,27 @@ const BusList = () => {
 
                     for (let i = 0; i < stops.length; i++) {
 
-                        if (stops[i].name === destination.toUpperCase()) {
+                        const arriveDate = new Date(stops[i].arriveDate); // time on which bus arriving
+                        // const departureDate = new Date(stops[i].departureDate); // time on which bus departure
+
+                       
+
+                        if (stops[i].stopName === destination.toUpperCase()) {
                             desAmount = stops[i].fair;
-                            desHour = stops[i].hour;
-                            desMin = stops[i].minites;
+                            // desHour = stops[i].hour;
+                            desHour = arriveDate.getHours() // destination ka arriving
+
+                            // desMin = stops[i].minites;
+                            desMin = arriveDate.getMinutes(); // destination ka arriving
 
                         }
-                        else if (stops[i].name === departure.toUpperCase()) {
+                        else if (stops[i].stopName === departure.toUpperCase()) {
                             depAmount = stops[i].fair;
-                            depHour = stops[i].hour;
-                            depMin = stops[i].minites;
+                            // depHour = stops[i].hour;
+                            depHour = arriveDate.getHours(); // dep ka arriving
+
+                            // depMin = stops[i].minites;
+                            depMin = arriveDate.getMinutes();  // dep ka arrivinf
                         }
 
                     }
@@ -136,6 +148,8 @@ const BusList = () => {
 
     const listItems = busList.map((bus, index) => {
 
+
+
         return (
             <Bus
                 key={index}
@@ -172,9 +186,7 @@ const BusList = () => {
             />
 
             <ul className={Classes.list}>
-                {/* {listItems.length === 0 ? <NoBusAvailable day = {day}/> : listItems} */}
-                { isLoading === true ? <p className={Classes.loading}>Loading...</p> : listItems.length === 0 ? <NoBusAvailable day={day} /> : listItems}
-
+                {isLoading === true ? <p className={Classes.loading}>Loading...</p> : listItems.length === 0 ? <NoBusAvailable day={day} /> : listItems}
             </ul>
 
         </div>

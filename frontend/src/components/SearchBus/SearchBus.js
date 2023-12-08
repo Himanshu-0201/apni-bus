@@ -5,8 +5,8 @@ import { useRef, useState } from "react";
 import { CgArrowsExchangeAltV } from "react-icons/cg";
 import Dropdown from "../Dropdown/Dropdown";
 import { LiaCircle } from "react-icons/lia";
-import { FaArrowDown } from "react-icons/fa6";
 import { IoIosArrowRoundDown } from "react-icons/io";
+import { Modal1 } from "../Modal1/Modal1";
 
 const SearchBus = () => {
 
@@ -15,6 +15,7 @@ const SearchBus = () => {
     const [isDepValid, setIsDepValid] = useState(true);
     const [dep, setDep] = useState("");
     const [des, setDes] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [refresh, setRefresh] = useState(false);
 
@@ -25,8 +26,7 @@ const SearchBus = () => {
         setRefresh(pre => !pre);
     }
 
-
-
+    const closeModalHandler = ()=>{setIsModalOpen(false)};
 
     const isFormValid = () => {
 
@@ -51,6 +51,11 @@ const SearchBus = () => {
             setIsDesValid(true);
         }
 
+        if (departure.toLowerCase() === destination.toLowerCase() && (destination.trim().length != 0 )) {
+            setIsModalOpen(true);
+            fomValid = false;
+        }
+
 
         return fomValid;
 
@@ -70,6 +75,8 @@ const SearchBus = () => {
 
         const destination = localStorage_des === null ? "" : localStorage_des;
         const departure = localStorage_dep === null ? "" : localStorage_dep;
+
+        if(!destination || !departure ) return; 
 
         localStorage.setItem("departure", destination);
         localStorage.setItem("destination", departure);
@@ -104,61 +111,75 @@ const SearchBus = () => {
 
     return (
 
-        <form className={Classes.form} onSubmit={submitHandler}>
+        <>
 
-            <div className={Classes.container}>
+            {isModalOpen 
+            ? 
+            <Modal1 onClick = {closeModalHandler}>
+                <div className={Classes["modal-child"]}>
+                    <p className={Classes["modal-child-info"]}>Please select the different station</p>
+                    <button onClick={closeModalHandler} className={Classes["modal-child-btn"]}>Ok</button>
+                </div>
+            </Modal1> 
+            : 
+            ""}
 
-                <div className={Classes.symbols}>
+            <form className={Classes.form} onSubmit={submitHandler}>
+
+                <div className={Classes.container}>
+
+                    <div className={Classes.symbols}>
+
+                        <div>
+                            <LiaCircle />
+                        </div>
+
+                        <div className={Classes.arrow}>
+                            <IoIosArrowRoundDown />
+                        </div>
+
+                        <div>
+                            <LiaCircle />
+                        </div>
+                    </div>
+
 
                     <div>
-                        <LiaCircle />
+                        <div className={Classes['input-div']}>
+
+
+                            <Dropdown
+                                placeholder="departure station"
+                                selectVal={selectDepVal}
+                                selectedVal={localStorage_dep}
+                            />
+
+                            {!isDepValid && <p className={Classes.warning}>Please  enter the departure stattion</p>}
+                        </div>
+
+                        <div className={Classes["exchange-station"]}>
+                            <CgArrowsExchangeAltV onClick={exchangeStationHandler} />
+                        </div>
+
+                        <div className={Classes['input-div']}>
+
+                            <Dropdown
+                                placeholder="destination station"
+                                selectVal={selectDesVal}
+                                selectedVal={localStorage_des}
+                            />
+                            {!isDesValid && <p className={Classes.warning}>Please  enter the destionation station</p>}
+                        </div>
                     </div>
 
-                    <div className={Classes.arrow}>
-                        <IoIosArrowRoundDown />
-                    </div>
-
-                    <div>
-                        <LiaCircle />
-                    </div>
                 </div>
 
 
-                <div>
-                    <div className={Classes['input-div']}>
 
+                <button>Submit</button>
+            </form>
 
-                        <Dropdown
-                            placeholder="departure station"
-                            selectVal={selectDepVal}
-                            selectedVal={localStorage_dep}
-                        />
-
-                        {!isDepValid && <p className={Classes.warning}>Please  enter the departure stattion</p>}
-                    </div>
-
-                    <div className={Classes["exchange-station"]}>
-                        <CgArrowsExchangeAltV onClick={exchangeStationHandler} />
-                    </div>
-
-                    <div className={Classes['input-div']}>
-
-                        <Dropdown
-                            placeholder="destination station"
-                            selectVal={selectDesVal}
-                            selectedVal={localStorage_des}
-                        />
-                        {!isDesValid && <p className={Classes.warning}>Please  enter the destionation station</p>}
-                    </div>
-                </div>
-
-            </div>
-
-
-
-            <button>Submit</button>
-        </form>
-
+        </>
     )
 };
 

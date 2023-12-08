@@ -9,6 +9,6 @@ const busStationSchema = new Schema({
 });
 
 
-const busStation = mongoose.model('BusStation', busStationSchema);
+const BusStation = mongoose.model('BusStation', busStationSchema);
 
-export default busStation;
+export default BusStation;

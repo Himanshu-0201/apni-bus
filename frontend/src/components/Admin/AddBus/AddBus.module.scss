@@ -1,11 +1,5 @@
 .add-bus-form {
-
     padding: 5% 10%;
-
-
-    .add-bus-input {
-        margin-bottom: 5%;
-    }
 
     .add-bus-label {
         display: block;
@@ -35,12 +29,16 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-    input{
+    input {
         padding: 10px 14px;
     }
 
     .add-bus-div {
         margin-bottom: 15px;
+
+        .add-bus-div-fd {
+            margin-bottom: 17px;
+        }
 
         .add-bus-label {
             display: block;
@@ -75,21 +73,26 @@
     }
 }
 
-.submit-btn{
+.submit-btn {
     margin-left: 2%;
 }
 
-.para{
+.para {
     margin-bottom: 10px;
 }
 
 
-.select-days{
+.select-days {
     margin-bottom: 10px;
     border: 1px solid #D0D0D0;
-    padding: 10px; 
+    padding: 10px;
 
-    .label p{
+    .label p {
         margin-bottom: 5px;
     }
+}
+
+
+.warning {
+    color: red;
 }

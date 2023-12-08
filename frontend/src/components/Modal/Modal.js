@@ -15,8 +15,6 @@ const Modal = (props) => {
     const tomorrowTime = new Date();
     tomorrowTime.setDate(todayDate + 1);
 
-    // console.log(props.selectedDay);
-
 
     const calendarDateChangeHandler = (date) => {
         props.onChangeDay(date);

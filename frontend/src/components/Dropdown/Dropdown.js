@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { animals } from "../../Data/Data";
+import { baseUrl } from "../../Data/UrlFile";
 
 import Classes from "./Dropdown.module.scss";
-let val = 1;
+import { useLoaderData } from "react-router-dom";
 
 
 const Dropdown = ({ selectVal, selectedVal, placeholder }) => {
@@ -11,35 +11,25 @@ const Dropdown = ({ selectVal, selectedVal, placeholder }) => {
     const [query, setQuery] = useState("");
     const [open, setOpen] = useState(false);
     const [dropDownElement, setDropDownElement] = useState([]);
+    const busStations = useLoaderData();
 
 
     const inputChangeHandler = async (e) => {
         const inputVal = e.target.value;
         setQuery(inputVal);
 
-
-        // do for backend api
-
-        // const baseUrl = "http//localhost:1000/bus-station";
-        // const apiUrl = `${baseUrl}/${inputVal}`
-
-        // const response = await fetch(apiUrl);
-        // const data = await response.json();
-
-        // return data;
-
-        const filetedAnimals = animals.filter((animal) => {
+        const filteredBusStations = busStations.filter((animal) => {
             return (animal["name"].toLowerCase().indexOf(inputVal.toLowerCase()) > -1);
         });
 
-        if(filetedAnimals.length === 1 && inputVal.toLowerCase() === filetedAnimals[0].name.toLowerCase()){
+        if(filteredBusStations.length === 1 && inputVal.toLowerCase() === filteredBusStations[0].name.toLowerCase()){
             selectVal(inputVal);
         }
         else{
             selectVal("");
         }
 
-        setDropDownElement(filetedAnimals);
+        setDropDownElement(filteredBusStations);
 
     };
 
@@ -98,3 +88,25 @@ const Dropdown = ({ selectVal, selectedVal, placeholder }) => {
 
 
 export default Dropdown;
+
+
+
+export const busStationLoader = async ()=>{
+
+    const route = "bus-stations";
+    const apiUrl = `${baseUrl}/${route}`;
+    let data=null;
+
+    try {
+
+        const response = await fetch(apiUrl);
+        data = await response.json();
+
+    } catch (error) {
+        console.log(error);
+    }
+
+
+    return data;
+
+};

@@ -1,45 +1,29 @@
 
+import BusStation from "../models/bus-station.js";
 import Bus from "../models/bus.js";
 
 export const searchBuses = (req, res)=>{
     
     const queryParameters = req.query;
-    console.log(queryParameters);
 
     const destination = queryParameters.destination.toUpperCase();
     const departure = queryParameters.departure.toUpperCase();
-    const year = queryParameters.year.toUpperCase();
-    const month = queryParameters.month.toUpperCase();
-    const day = queryParameters.day.toUpperCase();
 
-    console.log(destination);
-
-
+    const inputDate = new Date(queryParameters.date);
+    inputDate.setHours(0, 0, 0, 0);
+    const nextDay = new Date(inputDate);
+    nextDay.setDate(inputDate.getDate() + 1);
 
 
-    // Bus.find({stops : {$elemMatch : { $eq : departure}}, stops : {$elemMatch : {$eq : destination}}})
-    // .then(buses => {
-    //     // res.send("😁");
-    //     console.log(buses);
-    //     return res.send(buses);
-    // })
-    // .catch(error => {
-    //     console.log(error);
-        // return res.send("😑");
-    // });
-
-
-    Bus.find({'stops.name' : departure, 'stops.name' : destination, 'stops.year' : year, 'stops.month' : month, 'stops.day' : day})
+    Bus.find({'stops.stopName' : departure, 'stops.stopName' : destination, 'stops.arriveDate' : {  $gte: inputDate, $lt: nextDay  }})
     .then(buses => {
-        // res.send("😁");
         console.log(buses);
         return res.send(buses);
     })
     .catch(error => {
         console.log(error);
         return res.send("😑");
-    });
-
+    })
 
 };
 
@@ -56,3 +40,14 @@ export const getBusByID = (req, res)=>{
         console.log(error);
     })
 }
+
+export const getBusStations = (req, res)=>{
+
+    BusStation.find({})
+    .then(busStations => {
+        return res.send(busStations);
+    })
+    .catch(error => {
+        console.log(error);
+    })
+};
