@@ -1,6 +1,7 @@
 
 
 import Classes from "./TravelStations.module.scss";
+import { ImArrowRight } from "react-icons/im";
 
 const TravelStations = (props) => {
 
@@ -14,8 +15,21 @@ const TravelStations = (props) => {
     return (
         <>
             <div className={Classes.container}>
-                <p>{departure}</p>
-                <p>{destination}</p>
+                <div>
+                    <p>{departure}</p>
+                </div>
+                <div>
+                    <ImArrowRight
+                        preserveAspectRatio='none'
+                        style={{
+                            width: '70%',
+                            // height: '100%',
+                            color: 'white'
+                        }} />
+                </div>
+                <div>
+                    <p>{destination}</p>
+                </div>
             </div>
         </>
     )

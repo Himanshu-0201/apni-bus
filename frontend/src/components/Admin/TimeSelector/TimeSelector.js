@@ -46,7 +46,7 @@ function TimeSelector({onChange, defaultDate}) {
 
         <DemoItem >
           <DateTimePicker
-            defaultValue={defaultDate}
+            // defaultValue={defaultDate}
             onChange={handleDateTimeChange}
           />
         </DemoItem>

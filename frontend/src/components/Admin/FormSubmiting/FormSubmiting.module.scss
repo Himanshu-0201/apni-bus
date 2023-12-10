@@ -1,0 +1,17 @@
+.wrapper{
+    position: relative;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    height: 100vh;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

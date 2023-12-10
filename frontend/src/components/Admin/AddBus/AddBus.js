@@ -7,8 +7,6 @@
 // const stopsList = 
 // const 
 
-
-
 import { useCallback, useState } from "react";
 import Classes from "./AddBus.module.scss";
 import Stop from "../Stop/Stop";
@@ -17,6 +15,7 @@ import Days from "../Days/Days";
 import HorizontalLine from "../../HorizontalLine/HorizontalLine";
 import { baseUrl } from "../../../Data/UrlFile";
 import dayjs from "dayjs";
+import FormSubmiting from "../FormSubmiting/FormSubmiting";
 
 
 const stop = {
@@ -41,6 +40,7 @@ const AddBus = () => {
 
     const [busNumber, setBusNumber] = useState("");
     const [isBusNumberValid, setIsBusNumberValid] = useState(true);
+    const [isFormSubmiting, setIsFormSubmiting] = useState(false);
 
     const validFormHandler = () => {
 
@@ -106,6 +106,16 @@ const AddBus = () => {
 
     }, []);
 
+    const clearFormHandler = () => {
+        setStopsList([{
+            ...stop,
+            arriveDate: currentDate,
+            departureDate: currentDate
+        }]);
+
+        setBusNumber("");
+    }
+
 
     // console.log(stopsList)
 
@@ -141,10 +151,15 @@ const AddBus = () => {
             stops: stops
         }
 
+
+        setIsFormSubmiting(true);
+
         try {
 
             const route = "add-bus";
             const apiUrl = `${baseUrl}/${route}`;
+
+
 
             const response = await fetch(apiUrl, {
                 method: 'POST',
@@ -161,9 +176,16 @@ const AddBus = () => {
 
             const data = await response.json();
             console.log('Response Data:', data);
+
+            clearFormHandler();
+
+
         } catch (error) {
             console.error('Error:', error.message);
         }
+
+
+        setIsFormSubmiting(false);
 
     }
 
@@ -189,31 +211,41 @@ const AddBus = () => {
 
     return (
 
-        <form onSubmit={formSubmitHandler} className={Classes['add-bus-form']}>
-            <div className={Classes["add-bus-div"]}>
-                <label className={Classes["add-bus-label"]}>Bus number</label>
-                <input className={Classes["add-bus-input"]} name="bus number" value={busNumber} onChange={(e) => { setBusNumber(e.target.value) }} />
-                {isBusNumberValid ? "" : <p className={Classes.warning}> Please enter the bus number </p>}
-            </div>
+        <>
+            {isFormSubmiting
+                ?
+                <FormSubmiting>
+                    <p>Bus is adding in the database...........</p>
+                </FormSubmiting>
+                :
+                <form onSubmit={formSubmitHandler} className={Classes['add-bus-form']}>
+                    <div className={Classes["add-bus-div"]}>
+                        <label className={Classes["add-bus-label"]}>Bus number</label>
+                        <input className={Classes["add-bus-input"]} name="bus number" value={busNumber} onChange={(e) => { setBusNumber(e.target.value) }} />
+                        {isBusNumberValid ? "" : <p className={Classes.warning}> Please enter the bus number </p>}
+                    </div>
 
 
-            {/* <div className={Classes["select-days"]}>
+                    {/* <div className={Classes["select-days"]}>
                 <div className={Classes.label}>
                     <p> Runs on</p>
                 </div>
                 <Days />
             </div> */}
 
-            <HorizontalLine />
+                    <HorizontalLine />
 
-            <div className={Classes["add-bus-div"]}>
-                <p className={Classes.para}>Stops</p>
-                {stopsListElement}
-                <button className={Classes["add-bus-btn"]} onClick={addStopsHandler} type="button">Add stop</button>
-                <button className={`${Classes['submit-btn']} ${Classes["add-bus-btn"]}`} type="submit">Submit</button>
-            </div>
+                    <div className={Classes["add-bus-div"]}>
+                        <p className={Classes.para}>Stops</p>
+                        {stopsListElement}
+                        <button className={Classes["add-bus-btn"]} onClick={addStopsHandler} type="button">Add stop</button>
+                        <button className={`${Classes['submit-btn']} ${Classes["add-bus-btn"]}`} type="submit">Submit</button>
+                    </div>
 
-        </form>
+                </form>
+            }
+        </>
+
 
     );
 }

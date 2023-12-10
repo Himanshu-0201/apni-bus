@@ -56,18 +56,17 @@ const BusList = () => {
         const fetchData = async () => {
 
             const route = "bus-list";
+            
 
             const formattedDateTime = date.toLocaleString('en-US', {
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit',
-                hour12: false, // Use 24-hour format
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
               });
 
-            const apiUrl = `${baseUrl}/${route}?destination=${destination}&departure=${departure}&date=${formattedDateTime}`
+            const apiUrl = `${baseUrl}/${route}?destination=${destination}&departure=${departure}&date=${formattedDateTime}`;
+
+            console.log(apiUrl);
 
             try {
 
@@ -127,6 +126,7 @@ const BusList = () => {
                         _id: bus._id,
                         stops: bus.stops
                     }
+
                 });
 
 
